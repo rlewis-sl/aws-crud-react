@@ -1,7 +1,12 @@
-const BASE_URL = 'https://r8muv9cs77.execute-api.eu-west-1.amazonaws.com/widgets'
+const BASE_URL = 'https://acnncd1npk.execute-api.eu-west-1.amazonaws.com/widgets'
 
 export async function getWidgetsAsync() {
-    var response = await fetch(BASE_URL);
+    try {
+        var response = await fetch(BASE_URL);
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
     return response.json();
 }
 

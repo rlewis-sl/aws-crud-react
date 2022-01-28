@@ -1,4 +1,4 @@
-import ItemList from './ItemList';
+import ItemList from './components/ItemList';
 import {getWidgetsAsync} from './api/widgets';
 import './App.css';
 
