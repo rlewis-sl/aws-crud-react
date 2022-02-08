@@ -4,8 +4,9 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import ListPage from './components/ListPage';
 import NewItemPage from './components/NewItemPage';
+import ItemPage from './components/ItemPage';
+import ListPage from './components/ListPage';
 import './App.css';
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
         <div className="App">
           <Routes>
             <Route path="/new-widget" element={ <NewItemPage /> } />
+            <Route path="/widgets/:widgetId" element={ <ItemPage /> } />
             <Route path="/widgets" element={ <ListPage /> } />
             <Route path="/" element={ <ListPage /> } />
           </Routes>

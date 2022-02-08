@@ -1,6 +1,7 @@
-function Item(props) {
+import {Link} from 'react-router-dom';
+function Item({item}) {
     return (
-      <li>{props.item.name}</li>
+      <li><Link to={`/widgets/${item.id}`}>{item.name}</Link></li>
     );
   }
   
