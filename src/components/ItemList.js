@@ -14,7 +14,6 @@ function ItemList({getItems}) {
         getItems()
             .then(data => setListState({items: data.items, loading: false}))
             .catch(error => handleError(error));
-
     }
 
     if (listState.loading) {
@@ -26,7 +25,7 @@ function ItemList({getItems}) {
       return (
         <ul>
           {listState.items.map((o,i) => (
-              <Item item={o} key={o.name} />
+              <Item item={o} key={o.id} />
           ))}
         </ul>
       );
