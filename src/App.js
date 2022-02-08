@@ -5,8 +5,7 @@ import {
   Route
 } from 'react-router-dom';
 import ListPage from './components/ListPage';
-import NewItem from './components/NewItem';
-import {createWidget} from './api/widgets';
+import NewItemPage from './components/NewItemPage';
 import './App.css';
 
 export default function App() {
@@ -14,7 +13,7 @@ export default function App() {
       <Router>
         <div className="App">
           <Routes>
-            <Route path="/new-widget" element={ <NewItem createItem={createWidget} /> } />
+            <Route path="/new-widget" element={ <NewItemPage /> } />
             <Route path="/widgets" element={ <ListPage /> } />
             <Route path="/" element={ <ListPage /> } />
           </Routes>
