@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ItemDetail from './ItemDetail';
 import ItemEdit from './ItemEdit';
 import { getWidgetAsync, updateWidgetAsync } from '../api/widgets';
 
 function ItemPage() {
     const {widgetId} = useParams();
-    const [itemState, setItemState] = useState({item: {}, loading: true})
+    const [itemState, setItemState] = useState({});
+    const [pageState, setPageState] = useState({error: '', loading: true, editing: false, saving: false});
 
     function getItem() {
         return getWidgetAsync(widgetId);
@@ -14,31 +15,45 @@ function ItemPage() {
 
     function handleError(error) {
         console.log(error);
-        setItemState({error: error.message, loading: false});
+        setPageState({error: error.message, loading: false, editing: false, saving: false});
     }
   
     useEffect( () => {
         getItem()
-            .then(item => setItemState({item, loading: false, editing: true}))
+            .then(item => {
+                setItemState(item);
+                setPageState({...pageState, loading: false, editing: true, saving: false});
+            })
             .catch(error => handleError(error));
     }, []);
 
     async function saveItem(widget) {
-        setItemState({ ...itemState, saving: true, loading: false, editing: false,});
-        await updateWidgetAsync(widget);
-        setItemState({item: widget});
+        setPageState({...pageState, editing: false, saving: true});
+        const updatedItem = await updateWidgetAsync(widget);
+        setItemState(updatedItem);
+        setPageState({...pageState, editing: false, saving: false});
     }
 
-    if (itemState.loading) {
+    if (pageState.error) {
+        return ( <div>ERROR: {pageState.error}</div> );
+    } else if (pageState.loading) {
         return ( <div>Loading...</div> );
-    } else if (itemState.saving) {
+    } else if (pageState.saving) {
         return ( <div>Saving...</div>);
-    } else if (itemState.error) {
-        return ( <div>ERROR: {itemState.error}</div> );
-      } else if (itemState.editing) {
-        return ( <ItemEdit item={itemState.item} saveItem={saveItem} /> );
-      } else {
-        return ( <ItemDetail item={itemState.item} /> );
+    } else if (pageState.editing) {
+        return (
+            <>
+                <Link to='/widgets'>Back to list</Link>
+                <ItemEdit item={itemState} saveItem={saveItem} />
+            </>
+        );
+    } else {
+        return (
+            <>
+                <Link to='/widgets'>Back to list</Link>
+                <ItemDetail item={itemState} />
+            </>
+        );
     }
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NewItem from './NewItem'
 import { createWidgetAsync } from '../api/widgets';
 
@@ -16,7 +16,12 @@ function NewItemPage() {
     if (pageState.saving) {
         return ( <div>Saving...</div> );
     } else {
-        return ( <NewItem createItem={handleCreateItem} /> );
+        return (
+            <>
+                <Link to='/widgets'>Back to list</Link>
+                <NewItem createItem={handleCreateItem} />
+            </>
+        );
     }
 }
 
