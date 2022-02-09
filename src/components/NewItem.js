@@ -1,14 +1,15 @@
 
-export default function NewItem(props) {
+export default function NewItem({createItem}) {
 
-    const createItem = props.createItem;
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-        const name = e.target["name"].value;
-        const cost = e.target["cost"].value;
-        const weight = e.target["weight"].value;
+        const form = event.target;
+
+        const name = form["name"].value;
+        const cost = form["cost"].value;
+        const weight = form["weight"].value;
 
         const widget = {name, cost, weight};
         createItem(widget);

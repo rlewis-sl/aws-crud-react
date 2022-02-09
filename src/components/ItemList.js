@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Item from './Item';
 
 function ItemList({getItems}) {
@@ -10,11 +10,11 @@ function ItemList({getItems}) {
       setListState({error: error.message, loading: false});
     }
 
-    if (listState.loading) {
-        getItems()
-            .then(data => setListState({items: data.items, loading: false}))
-            .catch(error => handleError(error));
-    }
+    useEffect( () => {
+      getItems()
+        .then(data => setListState({items: data.items, loading: false}))
+        .catch(error => handleError(error));
+    }, []);
 
     if (listState.loading) {
       return <div>Loading...</div>
@@ -24,8 +24,8 @@ function ItemList({getItems}) {
 
       return (
         <ul>
-          {listState.items.map((o,i) => (
-              <Item item={o} key={o.id} />
+          {listState.items.map((item,i) => (
+              <Item item={item} key={item.id} />
           ))}
         </ul>
       );

@@ -1,11 +1,11 @@
 
 function ItemDetail({item}) {
     return (
-        <ul>
-            <li>Name: {item.name}</li>
-            <li>Cost: {item.cost}</li>
-            <li>Weight: {item.weight}</li>
-        </ul>
+        <>
+            <div>Name: {item.name}</div>
+            <div>Cost: {item.cost}</div>
+            <div>Weight: {item.weight}</div>
+        </>
     );
 }
 
