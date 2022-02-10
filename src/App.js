@@ -18,6 +18,7 @@ export default function App() {
             <Route path="/widgets/:widgetId" element={ <ItemPage /> } />
             <Route path="/widgets" element={ <ListPage /> } />
             <Route path="/" element={ <ListPage /> } />
+            <Route path="*" element={ <ListPage /> } />
           </Routes>
         </div>
       </Router>
