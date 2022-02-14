@@ -5,16 +5,21 @@ export async function getWidgetsAsync() {
     let response;
     try {
         response = await fetch(BASE_URL);
-    } catch (e) {
-        console.log(e);
-        throw e;
+    } catch (ex) {
+        console.log(ex);
+        throw ex;
     }
     return response.json();
 }
 
 export async function getWidgetAsync(id) {
     const response = await fetch(BASE_URL + '/' + id);
-    return response.json();
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to get item.');
+    }
 }
 
 export async function createWidgetAsync(widget) {
