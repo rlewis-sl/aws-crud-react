@@ -2,14 +2,13 @@ const AWS_API_ID = "vlao80eelj";
 const BASE_URL = `https://${AWS_API_ID}.execute-api.eu-west-1.amazonaws.com/widgets`;
 
 export async function getWidgetsAsync() {
-  let response;
-  try {
-    response = await fetch(BASE_URL);
-  } catch (ex) {
-    console.log(ex);
-    throw ex;
+  const response = await fetch(BASE_URL);
+
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error("Failed to get item list");
   }
-  return response.json();
 }
 
 export async function getWidgetAsync(id) {
@@ -32,7 +31,11 @@ export async function createWidgetAsync(widget) {
     body: JSON.stringify({ name, cost, weight }),
   });
 
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error("Failed to create item.");
+  }
 }
 
 export async function updateWidgetAsync(widget) {
@@ -46,11 +49,19 @@ export async function updateWidgetAsync(widget) {
     body: JSON.stringify({ id, name, cost, weight }),
   });
 
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error("Failed to update item.");
+  }
 }
 
 export async function deleteWidgetAsync(id) {
-  await fetch(BASE_URL + "/" + id, {
+  const response = await fetch(BASE_URL + "/" + id, {
     method: "DELETE",
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete item.");
+  }
 }
