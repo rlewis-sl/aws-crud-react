@@ -29,7 +29,7 @@ export async function createWidgetAsync(widget) {
 
   const response = await fetch(BASE_URL, {
     method: "POST",
-    body: `{ "name": "${name}", "cost": ${cost}, "weight": ${weight} }`,
+    body: JSON.stringify({ name, cost, weight }),
   });
 
   return response.json();
@@ -43,7 +43,7 @@ export async function updateWidgetAsync(widget) {
 
   const response = await fetch(BASE_URL + "/" + id, {
     method: "PUT",
-    body: `{ "id": "${id}", "name": "${name}", "cost": ${cost}, "weight": ${weight} }`,
+    body: JSON.stringify({ id, name, cost, weight }),
   });
 
   return response.json();
