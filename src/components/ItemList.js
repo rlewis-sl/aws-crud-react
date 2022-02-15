@@ -14,7 +14,7 @@ function ItemList({getItems}) {
       getItems()
         .then(data => setListState({items: data.items, loading: false}))
         .catch(error => handleError(error));
-    }, []);
+    }, [getItems]);
 
     if (listState.loading) {
       return <div>Loading...</div>
