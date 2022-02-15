@@ -48,3 +48,9 @@ export async function updateWidgetAsync(widget) {
 
     return response.json();
 }
+
+export async function deleteWidgetAsync(id) {
+    await fetch(BASE_URL + '/' + id, {
+        method: 'DELETE'
+    });
+}

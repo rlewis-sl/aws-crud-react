@@ -7,7 +7,7 @@ function NewItemPage() {
     const navigate = useNavigate();
     const [pageState, setPageState] = useState({});
 
-    async function handleCreateItem(widget) {
+    async function createItem(widget) {
         setPageState({saving: true});
         await createWidgetAsync(widget);
         navigate('/widgets', { replace: true });  // 'replace: true' prevents the current route from being included in the browser history
@@ -19,7 +19,7 @@ function NewItemPage() {
         return (
             <>
                 <Link to='/widgets'>Back to list</Link>
-                <NewItem createItem={handleCreateItem} />
+                <NewItem createItem={createItem} />
             </>
         );
     }
