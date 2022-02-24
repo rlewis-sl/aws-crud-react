@@ -22,13 +22,11 @@ export async function getWidgetAsync(id) {
 }
 
 export async function createWidgetAsync(widget) {
-  const name = widget.name;
-  const cost = widget.cost;
-  const weight = widget.weight;
+  const {id, ...widgetData} = widget;
 
   const response = await fetch(BASE_URL, {
     method: "POST",
-    body: JSON.stringify({ name, cost, weight }),
+    body: JSON.stringify(widgetData),
   });
 
   if (response.ok) {
@@ -39,14 +37,9 @@ export async function createWidgetAsync(widget) {
 }
 
 export async function updateWidgetAsync(widget) {
-  const id = widget.id;
-  const name = widget.name;
-  const cost = widget.cost;
-  const weight = widget.weight;
-
-  const response = await fetch(BASE_URL + "/" + id, {
+  const response = await fetch(BASE_URL + "/" + widget.id, {
     method: "PUT",
-    body: JSON.stringify({ id, name, cost, weight }),
+    body: JSON.stringify(widget),
   });
 
   if (response.ok) {

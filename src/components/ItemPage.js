@@ -18,6 +18,7 @@ function ItemPage() {
     editing: false,
     saving: false,
     deleting: false,
+    display: false,
   });
 
   function handleError(error) {
@@ -28,6 +29,7 @@ function ItemPage() {
       editing: false,
       saving: false,
       deleting: false,
+      display: false,
     });
   }
 
@@ -41,6 +43,7 @@ function ItemPage() {
           editing: true,
           saving: false,
           deleting: false,
+          display: false,
         }));
       })
       .catch((error) => handleError(error));
@@ -49,26 +52,32 @@ function ItemPage() {
   async function saveItem(widget) {
     setPageState({
       ...pageState,
+      loading: false,
       editing: false,
       saving: true,
       deleting: false,
+      display: false,
     });
     const updatedItem = await updateWidgetAsync(widget);
     setItemState(updatedItem);
     setPageState({
       ...pageState,
+      loading: false,
       editing: false,
       saving: false,
       deleting: false,
+      display: true,
     });
   }
 
   async function deleteItem(id) {
     setPageState({
       ...pageState,
+      loading: false,
       editing: false,
       saving: false,
       deleting: true,
+      display: false,
     });
     setItemState({});
     await deleteWidgetAsync(id);
@@ -82,30 +91,27 @@ function ItemPage() {
     deleteItem(itemState.id);
   };
 
-  if (pageState.error) {
-    return <div>ERROR: {pageState.error}</div>;
-  } else if (pageState.loading) {
-    return <div>Loading...</div>;
-  } else if (pageState.saving) {
-    return <div>Saving...</div>;
-  } else if (pageState.deleting) {
-    return <div>Deleting...</div>;
-  } else if (pageState.editing) {
-    return (
-      <>
-        <Link to="/widgets">Back to list</Link>
-        <ItemEdit item={itemState} saveItem={saveItem} />
-        <button onClick={handleDeleteClick}>Delete</button>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Link to="/widgets">Back to list</Link>
-        <ItemDetail item={itemState} />
-      </>
-    );
-  }
+  return (
+    <>
+      {pageState.error && <div>ERROR: {pageState.error}</div>}
+      {pageState.loading && <div>Loading...</div>}
+      {pageState.saving && <div>Saving...</div>}
+      {pageState.deleting && <div>Deleting...</div>}
+      {pageState.editing && 
+        <>
+          <Link to="/widgets">Back to list</Link>
+          <ItemEdit item={itemState} saveItem={saveItem} />
+          <button onClick={handleDeleteClick}>Delete</button>
+        </>
+      }
+      {pageState.display && 
+        <>
+          <Link to="/widgets">Back to list</Link>
+          <ItemDetail item={itemState} />
+        </>
+      }
+    </>
+  );
 }
 
 export default ItemPage;

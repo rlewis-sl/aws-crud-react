@@ -5,24 +5,25 @@ import { createWidgetAsync } from "../api/widgets";
 
 function NewItemPage() {
   const navigate = useNavigate();
-  const [pageState, setPageState] = useState({});
+  const [pageState, setPageState] = useState({saving: false, dataEntry: true});
 
   async function createItem(widget) {
-    setPageState({ saving: true });
+    setPageState({ saving: true, dataEntry: false });
     await createWidgetAsync(widget);
     navigate("/widgets", { replace: true }); // 'replace: true' prevents the current route from being included in the browser history
   }
 
-  if (pageState.saving) {
-    return <div>Saving...</div>;
-  } else {
-    return (
-      <>
-        <Link to="/widgets">Back to list</Link>
-        <NewItem createItem={createItem} />
-      </>
-    );
-  }
+  return (
+    <>
+      {pageState.saving && <div>Saving...</div>}
+      {pageState.dataEntry && 
+        <>
+          <Link to="/widgets">Back to list</Link>
+          <NewItem createItem={createItem} />
+        </>
+      }
+    </>
+  );
 }
 
 export default NewItemPage;
