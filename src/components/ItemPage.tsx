@@ -11,7 +11,9 @@ import {
 function ItemPage() {
   const { widgetId } = useParams();
   const navigate = useNavigate();
-  const [itemState, setItemState] = useState({});
+
+  const emptyItem = {id: "", name: "", cost: 0, weight: 0};
+  const [itemState, setItemState] = useState(emptyItem);
   const [pageState, setPageState] = useState({
     error: "",
     loading: true,
@@ -21,7 +23,7 @@ function ItemPage() {
     display: false,
   });
 
-  function handleError(error) {
+  function handleError(error:any) {
     console.log(error);
     setPageState({
       error: error.message,
@@ -49,7 +51,7 @@ function ItemPage() {
       .catch((error) => handleError(error));
   }, [widgetId]);
 
-  async function saveItem(widget) {
+  async function saveItem(widget : {id:string, name:string, cost:number, weight:number}) {
     setPageState({
       ...pageState,
       loading: false,
@@ -70,7 +72,7 @@ function ItemPage() {
     });
   }
 
-  async function deleteItem(id) {
+  async function deleteItem(id:string) {
     setPageState({
       ...pageState,
       loading: false,
@@ -79,12 +81,12 @@ function ItemPage() {
       deleting: true,
       display: false,
     });
-    setItemState({});
+    setItemState(emptyItem);
     await deleteWidgetAsync(id);
     navigate("/widgets", { replace: true }); // 'replace: true' prevents the current route from being included in the browser history
   }
 
-  const handleDeleteClick = (event) => {
+  const handleDeleteClick:React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     event.stopPropagation();
 

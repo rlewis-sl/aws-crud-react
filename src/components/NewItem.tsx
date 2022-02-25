@@ -1,13 +1,19 @@
-export default function NewItem({ createItem }) {
-  const handleSubmit = (event) => {
+import { FormEvent } from "react";
+
+function NewItem({ createItem } : { createItem:(widget: {name:string, cost:number, weight:number}) => void} ) {
+  const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const form = event.target;
+    const form = event.target as typeof event.target & {
+      name: {value: string};
+      cost: {value: string};
+      weight: {value: string};
+    };
 
-    const name = form["name"].value;
-    const cost = form["cost"].value;
-    const weight = form["weight"].value;
+    const name = form.name.value;
+    const cost = +form.cost.value;
+    const weight = +form.weight.value;
 
     const widget = { name, cost, weight };
     createItem(widget);
@@ -36,3 +42,5 @@ export default function NewItem({ createItem }) {
     </form>
   );
 }
+
+export default NewItem;

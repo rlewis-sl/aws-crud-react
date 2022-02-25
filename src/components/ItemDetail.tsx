@@ -1,4 +1,4 @@
-function ItemDetail({ item }) {
+function ItemDetail({ item } : { item:any}) {
   return (
     <>
       <div>Name: {item.name}</div>

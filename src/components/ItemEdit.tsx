@@ -1,14 +1,20 @@
-function ItemEdit({ item, saveItem }) {
-  function handleSubmit(event) {
+import { FormEvent } from "react";
+
+function ItemEdit({ item, saveItem } : { item:any, saveItem:Function}) {
+  function handleSubmit(event:FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
 
-    const form = event.target;
+    const form = event.target as typeof event.target & {
+      name: {value: string};
+      cost: {value: string};
+      weight: {value: string};
+    };
 
     const id = item.id;
-    const name = form["name"].value;
-    const cost = form["cost"].value;
-    const weight = form["weight"].value;
+    const name = form.name.value;
+    const cost = form.cost.value;
+    const weight = form.weight.value;
 
     const updatedWidget = { id, name, cost, weight };
     saveItem(updatedWidget);

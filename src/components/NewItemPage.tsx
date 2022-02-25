@@ -7,7 +7,7 @@ function NewItemPage() {
   const navigate = useNavigate();
   const [pageState, setPageState] = useState({saving: false, dataEntry: true});
 
-  async function createItem(widget) {
+  async function createItem(widget: {name:string, cost:number, weight:number}) {
     setPageState({ saving: true, dataEntry: false });
     await createWidgetAsync(widget);
     navigate("/widgets", { replace: true }); // 'replace: true' prevents the current route from being included in the browser history

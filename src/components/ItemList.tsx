@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import Item from "./Item";
 
-function ItemList({ getItems }) {
-  const [listState, setListState] = useState({ items: [], loading: true });
+function ItemList({ getItems } : { getItems:()=>Promise<any[]> }) {
+  const [listState, setListState] = useState({ items: [], error: null, loading: true });
 
-  function handleError(error) {
+  function handleError(error:any) {
     console.log(error);
-    setListState({ error: error.message, loading: false });
+    setListState({ items: [], error: error.message, loading: false });
   }
 
   useEffect(() => {
     getItems()
-      .then((data) => setListState({ items: data.items, loading: false }))
+      .then((data:any) => setListState({ items: data.items, error: null, loading: false }))
       .catch((error) => handleError(error));
   }, [getItems]);
 
@@ -22,7 +22,7 @@ function ItemList({ getItems }) {
   } else {
     return (
       <ul>
-        {listState.items.map((item, i) => (
+        {listState.items.map((item: {id:string, name:string, cost:number, weight:number}, i) => (
           <Item item={item} key={item.id} />
         ))}
       </ul>
