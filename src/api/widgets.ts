@@ -1,9 +1,9 @@
-import { Widget, WidgetId, WidgetContent } from "../model/widget";
+import { Widget, WidgetId, WidgetContent, WidgetCollection } from "../model/widget";
 
 const AWS_API_ID = "vlao80eelj";
 const BASE_URL = `https://${AWS_API_ID}.execute-api.eu-west-1.amazonaws.com/widgets`;
 
-export async function getWidgetsAsync(): Promise<Widget[]> {
+export async function getWidgetsAsync(): Promise<WidgetCollection> {
   const response = await fetch(BASE_URL);
 
   if (response.ok) {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Item from "./Item";
-import { Widget } from "../model/widget";
+import { Widget, WidgetCollection } from "../model/widget";
 
-function ItemList({ getItems }: { getItems: () => Promise<Widget[]> }) {
-  const [listState, setListState] = useState({
+interface PageState { items: Widget[], error: any, loading: boolean }
+
+function ItemList({ getItems } : { getItems:() => Promise<WidgetCollection>}) {
+  const [listState, setListState] = useState<PageState>({
     items: [],
     error: null,
     loading: true,
@@ -16,7 +18,7 @@ function ItemList({ getItems }: { getItems: () => Promise<Widget[]> }) {
 
   useEffect(() => {
     getItems()
-      .then((data: any) =>
+      .then((data) =>
         setListState({ items: data.items, error: null, loading: false })
       )
       .catch((error) => handleError(error));
@@ -29,14 +31,9 @@ function ItemList({ getItems }: { getItems: () => Promise<Widget[]> }) {
   } else {
     return (
       <ul>
-        {listState.items.map(
-          (
-            item: { id: string; name: string; cost: number; weight: number },
-            i
-          ) => (
-            <Item item={item} key={item.id} />
-          )
-        )}
+        {listState.items.map((item: Widget, i) => (
+          <Item item={item} key={item.id} />
+        ))}
       </ul>
     );
   }
