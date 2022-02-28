@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ItemDetail from "./ItemDetail";
 import ItemEdit from "./ItemEdit";
+import { Widget, WidgetId } from "../model/widget";
 import {
   getWidgetAsync,
   updateWidgetAsync,
@@ -12,7 +13,7 @@ function ItemPage() {
   const { widgetId } = useParams();
   const navigate = useNavigate();
 
-  const emptyItem = {id: "", name: "", cost: 0, weight: 0};
+  const emptyItem: Widget = { id: "", name: "", cost: 0, weight: 0 };
   const [itemState, setItemState] = useState(emptyItem);
   const [pageState, setPageState] = useState({
     error: "",
@@ -23,7 +24,7 @@ function ItemPage() {
     display: false,
   });
 
-  function handleError(error:any) {
+  function handleError(error: any) {
     console.log(error);
     setPageState({
       error: error.message,
@@ -36,22 +37,23 @@ function ItemPage() {
   }
 
   useEffect(() => {
-    getWidgetAsync(widgetId)
-      .then((item) => {
-        setItemState(item);
-        setPageState((state) => ({
-          ...state,
-          loading: false,
-          editing: true,
-          saving: false,
-          deleting: false,
-          display: false,
-        }));
-      })
-      .catch((error) => handleError(error));
+    widgetId &&
+      getWidgetAsync(widgetId)
+        .then((item) => {
+          setItemState(item);
+          setPageState((state) => ({
+            ...state,
+            loading: false,
+            editing: true,
+            saving: false,
+            deleting: false,
+            display: false,
+          }));
+        })
+        .catch((error) => handleError(error));
   }, [widgetId]);
 
-  async function saveItem(widget : {id:string, name:string, cost:number, weight:number}) {
+  async function saveItem(widget: Widget) {
     setPageState({
       ...pageState,
       loading: false,
@@ -72,7 +74,7 @@ function ItemPage() {
     });
   }
 
-  async function deleteItem(id:string) {
+  async function deleteItem(id: WidgetId) {
     setPageState({
       ...pageState,
       loading: false,
@@ -86,7 +88,9 @@ function ItemPage() {
     navigate("/widgets", { replace: true }); // 'replace: true' prevents the current route from being included in the browser history
   }
 
-  const handleDeleteClick:React.MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleDeleteClick: React.MouseEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -99,19 +103,19 @@ function ItemPage() {
       {pageState.loading && <div>Loading...</div>}
       {pageState.saving && <div>Saving...</div>}
       {pageState.deleting && <div>Deleting...</div>}
-      {pageState.editing && 
+      {pageState.editing && (
         <>
           <Link to="/widgets">Back to list</Link>
           <ItemEdit item={itemState} saveItem={saveItem} />
           <button onClick={handleDeleteClick}>Delete</button>
         </>
-      }
-      {pageState.display && 
+      )}
+      {pageState.display && (
         <>
           <Link to="/widgets">Back to list</Link>
           <ItemDetail item={itemState} />
         </>
-      }
+      )}
     </>
   );
 }

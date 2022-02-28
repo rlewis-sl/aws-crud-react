@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NewItem from "./NewItem";
+import { WidgetContent } from '../model/widget';
 import { createWidgetAsync } from "../api/widgets";
 
 function NewItemPage() {
   const navigate = useNavigate();
   const [pageState, setPageState] = useState({saving: false, dataEntry: true});
 
-  async function createItem(widget: {name:string, cost:number, weight:number}) {
+  async function createItem(widget: WidgetContent) {
     setPageState({ saving: true, dataEntry: false });
     await createWidgetAsync(widget);
     navigate("/widgets", { replace: true }); // 'replace: true' prevents the current route from being included in the browser history

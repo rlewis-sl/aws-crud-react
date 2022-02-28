@@ -1,20 +1,27 @@
 import { FormEvent } from "react";
+import { Widget } from "../model/widget";
 
-function ItemEdit({ item, saveItem } : { item:any, saveItem:Function}) {
-  function handleSubmit(event:FormEvent<HTMLFormElement>) {
+function ItemEdit({
+  item,
+  saveItem,
+}: {
+  item: Widget;
+  saveItem: (item: Widget) => void;
+}) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
 
     const form = event.target as typeof event.target & {
-      name: {value: string};
-      cost: {value: string};
-      weight: {value: string};
+      name: { value: string };
+      cost: { value: string };
+      weight: { value: string };
     };
 
     const id = item.id;
     const name = form.name.value;
-    const cost = form.cost.value;
-    const weight = form.weight.value;
+    const cost = +form.cost.value;
+    const weight = +form.weight.value;
 
     const updatedWidget = { id, name, cost, weight };
     saveItem(updatedWidget);

@@ -1,6 +1,7 @@
 import { FormEvent } from "react";
+import { WidgetContent } from "../model/widget";
 
-function NewItem({ createItem } : { createItem:(widget: {name:string, cost:number, weight:number}) => void} ) {
+function NewItem({ createItem } : { createItem:(widget: WidgetContent) => void} ) {
   const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();

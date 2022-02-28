@@ -1,7 +1,9 @@
+import { Widget, WidgetId, WidgetContent } from "../model/widget";
+
 const AWS_API_ID = "vlao80eelj";
 const BASE_URL = `https://${AWS_API_ID}.execute-api.eu-west-1.amazonaws.com/widgets`;
 
-export async function getWidgetsAsync() {
+export async function getWidgetsAsync(): Promise<Widget[]> {
   const response = await fetch(BASE_URL);
 
   if (response.ok) {
@@ -11,7 +13,7 @@ export async function getWidgetsAsync() {
   }
 }
 
-export async function getWidgetAsync(id) {
+export async function getWidgetAsync(id: WidgetId): Promise<Widget> {
   const response = await fetch(BASE_URL + "/" + id);
 
   if (response.ok) {
@@ -21,12 +23,10 @@ export async function getWidgetAsync(id) {
   }
 }
 
-export async function createWidgetAsync(widget) {
-  const {id, ...widgetData} = widget;
-
+export async function createWidgetAsync(widget: WidgetContent): Promise<WidgetId> {
   const response = await fetch(BASE_URL, {
     method: "POST",
-    body: JSON.stringify(widgetData),
+    body: JSON.stringify(widget),
   });
 
   if (response.ok) {
@@ -36,7 +36,7 @@ export async function createWidgetAsync(widget) {
   }
 }
 
-export async function updateWidgetAsync(widget) {
+export async function updateWidgetAsync(widget: Widget): Promise<Widget> {
   const response = await fetch(BASE_URL + "/" + widget.id, {
     method: "PUT",
     body: JSON.stringify(widget),
@@ -49,7 +49,7 @@ export async function updateWidgetAsync(widget) {
   }
 }
 
-export async function deleteWidgetAsync(id) {
+export async function deleteWidgetAsync(id: WidgetId) {
   const response = await fetch(BASE_URL + "/" + id, {
     method: "DELETE",
   });

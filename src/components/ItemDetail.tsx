@@ -1,4 +1,6 @@
-function ItemDetail({ item } : { item:any}) {
+import { WidgetContent } from "../model/widget";
+
+function ItemDetail({ item }: { item: WidgetContent }) {
   return (
     <>
       <div>Name: {item.name}</div>

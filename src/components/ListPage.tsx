@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import ItemList from "./ItemList";
+import {Widget} from "../model/widget";
 import { getWidgetsAsync } from "../api/widgets";
 
 function ListPage() {
-  async function getWidgets() {
+  async function getWidgets(): Promise<Widget[]> {
     try {
       return getWidgetsAsync();
     } catch (err) {
