@@ -9,11 +9,14 @@ import {
   deleteWidgetAsync,
 } from "../api/widgets";
 
-type PageStatus = "error" | "loading" | "editing" | "saving" | "deleting" | "display";
-interface PageState {
-  status: PageStatus;
-  message?: string;
+type PageStatus = "loading" | "editing" | "saving" | "deleting" | "display";
+interface NormalState { status: PageStatus }
+interface ErrorState {
+  status: "error";
+  message: string;
 }
+
+type PageState = ErrorState | NormalState;
 
 function ItemPage() {
   const { widgetId } = useParams();
@@ -68,7 +71,7 @@ function ItemPage() {
 
   return (
     <>
-      {pageState.status === "error" && <div>ERROR: {pageState.message}</div>}
+      {pageState.status === "error" && <div>ERROR: {pageState.message}</div> }
       {pageState.status === "loading" && <div>Loading...</div>}
       {pageState.status === "saving" && <div>Saving...</div>}
       {pageState.status === "deleting" && <div>Deleting...</div>}
@@ -87,6 +90,12 @@ function ItemPage() {
       )}
     </>
   );
+
+  function displayError(pageState: ErrorState) {
+    return (
+      <div>ERROR: {pageState.message}</div>
+    );
+  }
 }
 
 export default ItemPage;
