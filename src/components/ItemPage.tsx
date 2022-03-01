@@ -12,7 +12,7 @@ import {
 type PageStatus = "error" | "loading" | "editing" | "saving" | "deleting" | "display";
 type PageState = {
   status: PageStatus;
-  message?: string
+  message?: string;
 }
 
 function ItemPage() {

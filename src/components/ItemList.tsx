@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import Item from "./Item";
 import { Widget, WidgetCollection } from "../model/widget";
 
-interface PageState { items: Widget[], error: any, loading: boolean }
+type PageState = {
+  items: Widget[];
+  error: any;
+  loading: boolean;
+};
 
 function ItemList({ getItems } : { getItems:() => Promise<WidgetCollection>}) {
   const [listState, setListState] = useState<PageState>({
