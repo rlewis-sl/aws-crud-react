@@ -7,3 +7,10 @@ export interface WidgetContent {
 export type Widget = { id: WidgetId } & WidgetContent;
 
 export interface WidgetCollection { items: Widget[] }
+
+export interface WidgetFormContent {
+    name: { value: string };
+    cost: { value: string };
+    weight: {value: string };
+  }
+    

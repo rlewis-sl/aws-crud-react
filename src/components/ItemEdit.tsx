@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { Widget } from "../model/widget";
+import { Widget, WidgetFormContent } from "../model/widget";
 
 function ItemEdit({
   item,
@@ -12,11 +12,7 @@ function ItemEdit({
     event.preventDefault();
     event.stopPropagation();
 
-    const form = event.target as typeof event.target & {
-      name: { value: string };
-      cost: { value: string };
-      weight: { value: string };
-    };
+    const form = event.target as (typeof event.target) & WidgetFormContent;
 
     const id = item.id;
     const name = form.name.value;

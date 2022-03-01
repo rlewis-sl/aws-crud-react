@@ -1,16 +1,12 @@
 import { FormEvent } from "react";
-import { WidgetContent } from "../model/widget";
+import { WidgetContent, WidgetFormContent } from "../model/widget";
 
 function NewItem({ createItem } : { createItem:(widget: WidgetContent) => void} ) {
   const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const form = event.target as typeof event.target & {
-      name: {value: string};
-      cost: {value: string};
-      weight: {value: string};
-    };
+    const form = event.target as (typeof event.target) & WidgetFormContent;
 
     const name = form.name.value;
     const cost = +form.cost.value;
