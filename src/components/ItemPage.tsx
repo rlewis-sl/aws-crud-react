@@ -9,30 +9,27 @@ import {
   deleteWidgetAsync,
 } from "../api/widgets";
 
+type PageStatus = "error" | "loading" | "editing" | "saving" | "deleting" | "display";
+type PageState = {
+  status: PageStatus;
+  message?: string
+}
+
 function ItemPage() {
   const { widgetId } = useParams();
   const navigate = useNavigate();
 
   const emptyItem: Widget = { id: "", name: "", cost: 0, weight: 0 };
   const [itemState, setItemState] = useState(emptyItem);
-  const [pageState, setPageState] = useState({
-    error: "",
-    loading: true,
-    editing: false,
-    saving: false,
-    deleting: false,
-    display: false,
+  const [pageState, setPageState] = useState<PageState>({
+    status: "loading"
   });
 
   function handleError(error: any) {
     console.log(error);
     setPageState({
-      error: error.message,
-      loading: false,
-      editing: false,
-      saving: false,
-      deleting: false,
-      display: false,
+      status: "error",
+      message: error.message,
     });
   }
 
@@ -41,48 +38,20 @@ function ItemPage() {
       getWidgetAsync(widgetId)
         .then((item) => {
           setItemState(item);
-          setPageState((state) => ({
-            ...state,
-            loading: false,
-            editing: true,
-            saving: false,
-            deleting: false,
-            display: false,
-          }));
+          setPageState({ status: "editing" });
         })
         .catch((error) => handleError(error));
   }, [widgetId]);
 
   async function saveItem(widget: Widget) {
-    setPageState({
-      ...pageState,
-      loading: false,
-      editing: false,
-      saving: true,
-      deleting: false,
-      display: false,
-    });
+    setPageState({ status: "saving" });
     const updatedItem = await updateWidgetAsync(widget);
     setItemState(updatedItem);
-    setPageState({
-      ...pageState,
-      loading: false,
-      editing: false,
-      saving: false,
-      deleting: false,
-      display: true,
-    });
+    setPageState({ status: "display" });
   }
 
   async function deleteItem(id: WidgetId) {
-    setPageState({
-      ...pageState,
-      loading: false,
-      editing: false,
-      saving: false,
-      deleting: true,
-      display: false,
-    });
+    setPageState({ status: "deleting" });
     setItemState(emptyItem);
     await deleteWidgetAsync(id);
     navigate("/widgets", { replace: true }); // 'replace: true' prevents the current route from being included in the browser history
@@ -99,18 +68,18 @@ function ItemPage() {
 
   return (
     <>
-      {pageState.error && <div>ERROR: {pageState.error}</div>}
-      {pageState.loading && <div>Loading...</div>}
-      {pageState.saving && <div>Saving...</div>}
-      {pageState.deleting && <div>Deleting...</div>}
-      {pageState.editing && (
+      {pageState.status === "error" && <div>ERROR: {pageState.message}</div>}
+      {pageState.status === "loading" && <div>Loading...</div>}
+      {pageState.status === "saving" && <div>Saving...</div>}
+      {pageState.status === "deleting" && <div>Deleting...</div>}
+      {pageState.status === "editing" && (
         <>
           <Link to="/widgets">Back to list</Link>
           <ItemEdit item={itemState} saveItem={saveItem} />
           <button onClick={handleDeleteClick}>Delete</button>
         </>
       )}
-      {pageState.display && (
+      {pageState.status === "display" && (
         <>
           <Link to="/widgets">Back to list</Link>
           <ItemDetail item={itemState} />
