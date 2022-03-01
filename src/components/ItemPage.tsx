@@ -10,7 +10,7 @@ import {
 } from "../api/widgets";
 
 type PageStatus = "error" | "loading" | "editing" | "saving" | "deleting" | "display";
-type PageState = {
+interface PageState {
   status: PageStatus;
   message?: string;
 }
