@@ -8,7 +8,7 @@ interface PageState {
   loading: boolean;
 }
 
-function ItemList({ getItems } : { getItems:() => Promise<WidgetCollection>}) {
+function ItemList({ getItems }: { getItems: () => Promise<WidgetCollection> }) {
   const [listState, setListState] = useState<PageState>({
     items: [],
     error: null,

@@ -90,12 +90,6 @@ function ItemPage() {
       )}
     </>
   );
-
-  function displayError(pageState: ErrorState) {
-    return (
-      <div>ERROR: {pageState.message}</div>
-    );
-  }
 }
 
 export default ItemPage;
