@@ -35,7 +35,7 @@ function ItemList({ getItems }: { getItems: () => Promise<WidgetCollection> }) {
   } else {
     return (
       <ul>
-        {listState.items.map((item: Widget, i) => (
+        {listState.items.map((item: Widget) => (
           <Item item={item} key={item.id} />
         ))}
       </ul>
