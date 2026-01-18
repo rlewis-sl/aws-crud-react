@@ -22,7 +22,7 @@
     "vitest": "^4.0.17"
   },
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
