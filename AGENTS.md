@@ -31,6 +31,12 @@ npm test              # Runs Vitest in watch mode
 - Setup file: [vitest.setup.ts](vitest.setup.ts) - extends matchers and runs cleanup
 - Example: [App.test.jsx](src/App.test.jsx)
 
+**Dependency Injection for Testing:**
+- Page components accept optional API function props for testing with stubs
+- Example: [ListPage.tsx](src/components/ListPage.tsx) accepts `getWidgetsAsync` prop
+- Test example: [ListPage.test.tsx](src/components/ListPage.test.tsx) - shows how to inject stub implementations
+- Pattern: `function ListPage({ getWidgetsAsync: prop = actual })` with default parameter
+
 ### Building & Deploying
 ```bash
 npm run build         # TypeScript compile + Vite build → build/ folder
