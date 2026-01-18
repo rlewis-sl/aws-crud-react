@@ -3,10 +3,14 @@ import ItemList from "./ItemList";
 import { WidgetCollection } from "../model/widget";
 import { getWidgetsAsync } from "../api/widgets";
 
-function ListPage() {
+function ListPage({ 
+  getWidgetsAsync: getWidgetsAsyncProp = getWidgetsAsync 
+}: { 
+  getWidgetsAsync?: () => Promise<WidgetCollection> 
+} = {}) {
   async function getWidgets(): Promise<WidgetCollection> {
     try {
-      return getWidgetsAsync();
+      return getWidgetsAsyncProp();
     } catch (err) {
       console.log(err);
       return { items: [] };
