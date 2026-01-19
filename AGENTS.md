@@ -14,7 +14,6 @@ This is a **React + TypeScript SPA** that provides a CRUD interface for "widgets
 - **Page-level components** handle routing, state, and async logic (e.g., [ItemPage.tsx](src/components/ItemPage.tsx))
 - **Display/form components** are presentational and receive props (e.g., [ItemEdit.tsx](src/components/ItemEdit.tsx))
 - API URL is **hardcoded** in [widgets.ts](src/api/widgets.ts) - change `AWS_API_ID` constant to point to different environments
-- Build output goes to `build/` (not `dist/`) - configured in [vite.config.ts](vite.config.ts)
 
 ## Developer Workflows
 
