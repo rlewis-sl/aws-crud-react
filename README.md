@@ -7,6 +7,7 @@ This project uses [Vite](https://vitejs.dev/) for a fast and modern development 
 In the project directory, you can run:
 
 ### `npm start`
+(or `npm run dev`)
 
 Runs the app in the development mode.\
 Open [http://localhost:5175](http://localhost:5175) to view it in the browser.
