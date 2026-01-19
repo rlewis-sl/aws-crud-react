@@ -37,6 +37,22 @@ See the Vite documentation for more information about [building for production](
 Locally preview the production build.\
 This command will start a local server to serve the built files from the `dist` folder.
 
+## Testing
+
+This project uses [Vitest](https://vitest.dev/) for testing, which is specifically designed to work with Vite.
+
+### `npm run test:run`
+
+Runs the test suite once and exits.\
+This is useful for CI/CD pipelines.
+
+### `npm run test:ui`
+
+Launches the Vitest UI for an interactive testing experience.\
+Open [http://localhost:51204](http://localhost:51204) to view the test interface in your browser.
+
+Tests are located alongside the source files with the `.test.js` extension. The test suite uses [@testing-library/react](https://testing-library.com/react) for component testing and [@testing-library/jest-dom](https://github.com/testing-library/jest-dom) for additional matchers.
+
 ## Deployment
 
 This project includes AWS deployment scripts:
