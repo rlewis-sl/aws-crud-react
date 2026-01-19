@@ -8,8 +8,8 @@ export default defineConfig({
     port: 5175,
     open: true,
   },
-  build: {
-    outDir: 'build',
+  preview: {
+    port: 4175,
   },
   test: {
     globals: true,
