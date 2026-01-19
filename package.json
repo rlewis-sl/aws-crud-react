@@ -27,6 +27,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "create-web": "cd aws/ && create-web.bat",
     "deploy-web": "cd aws/ && deploy-web.bat"
   },
